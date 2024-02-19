@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+<body>
+    <div id="CSVTable"></div>
+
+    <script>
+        $(function() {
+            $.get('csv/english_course02.csv', function(data) {
+                // Parse CSV data
+                var parsedData = Papa.parse(data, { header: true });
+                
+                // Generate HTML table
+                var html = '<table>';
+                
+                // Add table headers
+                html += '<thead><tr>';
+                $.each(parsedData.meta.fields, function(_, header) {
+                    html += '<th>' + header + '</th>';
+                });
+                html += '</tr></thead>';
+                
+                // Add table body
+                html += '<tbody>';
+                $.each(parsedData.data, function(_, row) {
+                    html += '<tr>';
+                    $.each(row, function(_, cell) {
+                        html += '<td>' + cell + '</td>';
+                    });
+                    html += '</tr>';
+                });
+                html += '</tbody></table>';
+
+                // Insert table into #CSVTable
+                $('#CSVTable').html(html);
+            });
+        });
+    </script>
+</body>
+</html>
