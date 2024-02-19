@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Course</title>
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+    .navigation {
+        margin-top: 20px;
+    }
+    
+    .course-title {
+        font-size: 30px;
+    }
+
+    /* Styling for buttons */
+    .navigation button {
+        padding: 10px 20px; /* Adjust padding as needed */
+        font-size: 20px; /* Adjust font size as needed */
+        border-radius: 8px; /* Add border radius for rounded corners */
+        background-color: #04AA6D; /* Change background color */
+        color: #fff; /* Change text color */
+        border: none; /* Remove default button border */
+        cursor: pointer; /* Add cursor pointer */
+        transition: background-color 0.3s; /* Add transition effect */
+    }
+
+    /* Styling for button hover state */
+    .navigation button:hover {
+        background-color: #0056b3; /* Change background color on hover */
+    }
+
+    /* Disable styles */
+    .navigation button:disabled {
+        background-color: #ccc; /* Change background color for disabled state */
+        cursor: not-allowed; /* Change cursor to not allowed */
+    }
+</style>
+</head>
+<body>
+
+<div class="topnav">
+    <a class="active" href="user.html">Go to User Page</a>
+    <a  href="course_list.html">Home page</a>
+    <!--<a href="Last Month.html">Last month data</a>
+    <a href="full_data_cases_line.html">Full data</a>
+    <a href="state_graph.html">Graph Malaysia's state cases</a>-->
+</div>
+
+<h2>English Course</h2>
+
+<div id="csvData">
+    <!-- CSV data will be dynamically generated here -->
+</div>
+
+<div class="navigation">
+    <button id="previousButton" disabled>Previous</button>
+    <button id="nextButton">Next</button>
+</div>
+
+<script>
+    let currentPage = 0;
+    const csvUrls = [
+        'csv/english_course01.csv',
+        'csv/english_course02.csv',
+        'csv/english_course03.csv',
+        'csv/english_course04.csv',
+
+        // Add more URLs for additional pages if needed
+    ];
+
+    function convertCSVtoHTML(csv) {
+        const lines = csv.split('\n');
+        let html = '';
+        lines.forEach(line => {
+            const cells = line.split(',');
+            cells.forEach((cell, index) => {
+                const cellContent = cell.replace(/^"|"$/g, ''); // Remove leading and trailing quotation marks
+                if (cellContent.trim() !== '') { // Check if cell is not empty
+                    if (index === 0) {
+                        html += '<p class="course-title">' + cellContent + '</p>';
+                    } else {
+                        html += '<p>' + cellContent + '</p>';
+                    }
+                }
+            });
+        });
+        return html;
+    }
+
+    function loadCSVFromWeb(url) {
+        fetch(url)
+            .then(response => response.text())
+            .then(csvData => {
+                const csvHtml = convertCSVtoHTML(csvData);
+                document.getElementById('csvData').innerHTML = csvHtml;
+                updateNavigationButtons();
+            })
+            .catch(error => console.error('Error fetching CSV file:', error));
+    }
+
+    function nextPage() {
+        if (currentPage < csvUrls.length - 1) {
+            currentPage++;
+            loadCSVFromWeb(csvUrls[currentPage]);
+        }
+    }
+
+    function previousPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            loadCSVFromWeb(csvUrls[currentPage]);
+        }
+    }
+
+    function updateNavigationButtons() {
+        document.getElementById('previousButton').disabled = currentPage === 0;
+        document.getElementById('nextButton').disabled = currentPage === csvUrls.length - 1;
+    }
+
+    document.getElementById('nextButton').addEventListener('click', nextPage);
+    document.getElementById('previousButton').addEventListener('click', previousPage);
+
+    // Load the first page initially
+    loadCSVFromWeb(csvUrls[currentPage]);
+</script>
+
+</body>
+</html>
