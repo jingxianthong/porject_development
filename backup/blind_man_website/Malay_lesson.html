@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>blind man</title>
+
+    <!-- Linking the horizontal CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="topnav">
+        <a class="active" href="/Users.html">Go to User Page</a>
+        <a  href="index.html">Files page</a>
+        <!--<a href="Last Month.html">Last month data</a>
+        <a href="full_data_cases_line.html">Full data</a>
+        <a href="state_graph.html">Graph Malaysia's state cases</a>-->
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Welcome to Malay lesson </h1>
+
+        </header>
+
+        <main>
+            <p>Are you ready to start your course?</p>
+            <p style="font-size:30px">just a sample only</p>
+
+            <!-- Add the "Start Class" button -->
+            <button class="start-class-button" onclick="startClass()">Yes</button>
+
+        </main>
+
+        <footer>
+            <p>© 2023 Covid-19 Case Data. All rights reserved.</p>
+        </footer>
+
+    </div>
+    <!-- JavaScript function for the "Start Class" button -->
+    <script>
+        function startClass() {
+            window.location.href = "thank_you.html"
+        }
+    </script>
+
+</body>
+</html>

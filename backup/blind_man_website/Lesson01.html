@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- Documentation
+data = 12/feb/2024 
+write by : thongjingxian
+descuption :
+
+
+-->
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+   <meta http-equiv="Pragma" content="no-cache" />
+   <meta http-equiv="Expires" content="0" />
+
+<script src="js/jquery.min.js"></script>
+<script src="js/papaparse.js"></script>
+
+<body>
+    <div>Info One</div>
+<script>
+    function arrayToTable(tableData) {
+        var table = $('<table></table>');
+        $(tableData).each(function (i, rowData) {
+            var row = $('<tr></tr>');
+            $(rowData).each(function (j, cellData) {
+ 
+
+                row.append($('<tr><td>'+cellData+'</td></tr>'));
+            });
+            table.append(row);
+        });
+        return table;
+    }
+
+    $.ajax({
+        type: "GET",
+        url: "csv/test_english.csv",
+        success: function (data) {
+            $('body').append(arrayToTable(Papa.parse(data).data));
+        }
+    });
+</script>
+</body>
+</html>

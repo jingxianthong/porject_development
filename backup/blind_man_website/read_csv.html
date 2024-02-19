@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Read CSV with JavaScript</title>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+</head>
+<body>
+  <input type="file" id="csv-file">
+  <div id="data-container"></div>
+
+  <script>
+    const fileInput = document.getElementById('csv-file');
+    const dataContainer = document.getElementById('data-container');
+
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      Papa.parse(file, {
+        complete: (results) => {
+          const data = results.data;
+          // Create HTML table or other elements dynamically
+          let html = "<table>";
+          for (let i = 0; i < data.length; i++) {
+            html += "<tr>";
+            for (let j = 0; j < data[i].length; j++) {
+              html += "<td>" + data[i][j] + "</td>";
+            }
+            html += "</tr>";
+          }
+          html += "</table>";
+          dataContainer.innerHTML = html;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
