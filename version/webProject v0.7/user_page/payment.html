@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        .action-button {
+            display: inline-block; /* Display buttons inline */
+            margin: 0 10px; /* Add space between buttons */
+            padding: 10px 20px; /* Adjust button padding */
+            background-color: #007bff; /* Set button background color to blue */
+            color: #fff; /* Set button text color */
+            border: none; /* Remove button border */
+            border-radius: 5px; /* Apply border radius */
+            text-decoration: none; /* Remove default underline */
+            cursor: pointer; /* Set cursor to pointer on hover */
+            transition: background-color 0.3s; /* Add smooth transition */
+        }
+        
+        .action-button:hover {
+            background-color: #0056b3; /* Darken button color on hover */
+        }
+
+        .action-button a {
+            color: inherit; /* Inherit the color from the parent (.action-button) */
+            text-decoration: none; /* Remove underline */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="payment-container" style="text-align: center;">
+        <h1>Payment Details</h1>
+        <p>Scan the QR code to make the payment.</p>
+        <!-- Include the fixed QR code image -->
+        <img src="QR_code.jpg" alt="QR Code" style="width: 200px; height: 200px; margin: 20px;">
+        <p>Amount: $50.00</p>
+        <div class="action-button"> <!-- Fixing the typo and adding class attribute -->
+            <a href="user.html" class="back-to-home-button">Back to Home</a>
+        </div>
+    </div>
+
+</body>
+</html>

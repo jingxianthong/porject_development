@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera and Screen Sharing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .navbar {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .navbar button {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .navbar button:hover {
+            background-color: #777;
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            border: 2px solid #ccc;
+            padding: 10px;
+        }
+
+        video {
+            border-radius: 5px;
+            box-shadow: 1px 10px 10px rgba(0, 0, 0, 0.2);
+            max-width: 45%; /* Adjust the width */
+            margin: 0 auto; /* Center horizontally */
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <button id="startCameraButton">Start Camera</button>
+    <button id="stopCameraButton">Stop Camera</button>
+    <button id="startScreenSharingButton">Start Screen Sharing</button>
+    <button id="stopScreenSharingButton">Stop Screen Sharing</button>
+    <button id="exitButton">Exit</button>
+</div>
+
+<div class="video-container">
+    <video id="camera" autoplay></video>
+    <video id="screen" autoplay></video>
+</div>
+
+
+<script>
+    const cameraVideo = document.getElementById('camera');
+    const screenVideo = document.getElementById('screen');
+    const startCameraButton = document.getElementById('startCameraButton');
+    const stopCameraButton = document.getElementById('stopCameraButton');
+    const startScreenSharingButton = document.getElementById('startScreenSharingButton');
+    const stopScreenSharingButton = document.getElementById('stopScreenSharingButton');
+    const exitButton = document.getElementById('exitButton');
+
+    let cameraStream = null;
+
+    startCameraButton.addEventListener('click', async () => {
+        try {
+            cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+            cameraVideo.srcObject = cameraStream;
+        } catch (error) {
+            console.error('Error accessing camera:', error);
+        }
+    });
+
+    stopCameraButton.addEventListener('click', () => {
+        stopCamera();
+    });
+
+    function stopCamera() {
+        if (cameraStream) {
+            cameraStream.getTracks().forEach(track => {
+                track.stop();
+            });
+            cameraStream = null;
+            cameraVideo.srcObject = null;
+        }
+    }
+
+    startScreenSharingButton.addEventListener('click', async () => {
+        try {
+            const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+            screenVideo.srcObject = stream;
+        } catch (error) {
+            console.error('Error accessing screen:', error);
+        }
+    });
+
+    stopScreenSharingButton.addEventListener('click', () => {
+        stopScreenSharing();
+    });
+
+    function stopScreenSharing() {
+        const stream = screenVideo.srcObject;
+        const tracks = stream.getTracks();
+
+        tracks.forEach(track => {
+            track.stop();
+        });
+
+        screenVideo.srcObject = null;
+    }
+
+    exitButton.addEventListener('click', () => {
+        stopCamera();
+        stopScreenSharing();
+    });
+</script>
+
+</body>
+</html>
