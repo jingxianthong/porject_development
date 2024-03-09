@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        .action-button {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+
+        .action-button a {
+            color: inherit;
+            text-decoration: none;
+        }
+    </style>
+<script>
+    // Function to handle keypress events
+    document.onkeydown = function(event) {
+        if (event.key === "Escape") {
+            window.location.href = "user.html"; // Redirect to home page
+        }
+    };
+
+    // Function to read out loud using screen reader
+    function readText(text) {
+        var speech = new SpeechSynthesisUtterance();
+        speech.text = text;
+        speech.volume = 1;
+        speech.rate = 1;
+        speech.pitch = 1;
+        window.speechSynthesis.speak(speech);
+    }
+
+    // Add screen reader announcement for QR code
+    window.onload = function() {
+        var qrCode = document.querySelector('img[alt="QR Code for Payment"]');
+        var amount = "Amount: $50.00";
+        readText("Payment Details. Scan the QR code below to make the payment. " + amount);
+        qrCode.addEventListener('click', function() {
+            readText("QR Code for Payment. " + amount);
+        });
+    };
+</script>
+
+</head>
+<body>
+
+    <div id="payment-container" style="text-align: center;">
+        <h1>Payment Details</h1>
+        <p>Scan the QR code below to make the payment. Alternatively, you can use the provided link to return to the home page.</p>
+        <img src="QR_code.jpg" alt="QR Code for Payment" style="width: 200px; height: 200px; margin: 20px;">
+        <p>Amount: $50.00</p>
+        <p>Press Escape to navigate to Exit</p>
+        <div class="action-button">
+            <a href="user.html" class="back-to-home-button">Back to Home</a>
+        </div>
+    </div>
+
+</body>
+</html>
