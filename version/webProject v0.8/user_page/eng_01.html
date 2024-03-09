@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/eng.css">
+<title>English Course</title>
+</head>
+<body>
+
+<div class="topnav">
+    <a class="active" href="user.html">User</a>
+</div>
+
+<h2>English Course</h2>
+<h3>Press left arrow to go to the previous page, press right arrow to go to the next page.</h3>
+<h3>Press Enter to start/stop speaking the learning content. press esc to exit</h3>
+
+<div class="csv-container">
+    <div id="csvData">
+        <!-- CSV data will be dynamically generated here -->
+    </div>
+</div>
+
+<div class="navigation-container">
+    <div class="navigation">
+        <button id="previousButton" disabled>Previous</button>
+        <button id="nextButton">Next</button>
+    </div>
+</div>
+
+<script>
+    let currentPage = 0;
+    let speaking = false; // Flag to track speech state
+    const csvUrls = [
+        'csv/english_course01.csv',
+        'csv/english_course02.csv',
+        'csv/english_course03.csv',
+        'csv/english_course04.csv',
+        'csv/english_course05.csv',
+        'csv/english_course06.csv',
+        'csv/english_course07.csv',
+    ];
+
+    function convertCSVtoHTML(csv) {
+        const lines = csv.split('\n');
+        let html = '';
+        lines.forEach((line, index) => {
+            const cells = line.split(',');
+            cells.forEach((cell, cellIndex) => {
+                const cellContent = cell.replace(/^"|"$/g, ''); // Remove leading and trailing quotation marks
+                if (cellContent.trim() !== '') {
+                    if (index === 1 && cellIndex === 0) {
+                        html += '<p class="lecture-note">' + cellContent + '</p>';
+                    } else {
+                        const boldWords = ["Word", "Definition", "Example Sentence"];
+                        let formattedCellContent = cellContent;
+                        boldWords.forEach(word => {
+                            formattedCellContent = formattedCellContent.replace(new RegExp(word + ':', 'g'), '<strong>' + word + ':</strong>');
+                        });
+
+                        html += '<p>' + formattedCellContent + '</p>';
+                    }
+                }
+            });
+        });
+        return html;
+    }
+
+    async function fetchCSVData(url) {
+        const response = await fetch(url);
+        const data = await response.text();
+        return data;
+    }
+
+    function loadCurrentPage() {
+        fetchCSVData(csvUrls[currentPage]).then(csv => {
+            document.getElementById('csvData').innerHTML = convertCSVtoHTML(csv);
+        });
+        document.getElementById('previousButton').disabled = currentPage === 0;
+        document.getElementById('nextButton').disabled = currentPage === csvUrls.length - 1;
+    }
+
+    function speakText(text) {
+        if (!speaking) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(utterance);
+            speaking = true;
+
+            utterance.onend = function() {
+                speaking = false; // Reset speaking flag when finished
+            };
+        } else {
+            speechSynthesis.cancel();
+            speaking = false;
+        }
+    }
+
+    function speakNonCSVContent() {
+        let textToSpeak = document.querySelector('h2').textContent + ". ";
+        textToSpeak += document.querySelectorAll('h3')[0].textContent + ". ";
+        textToSpeak += document.querySelectorAll('h3')[1].textContent + ". ";
+
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        speechSynthesis.speak(utterance);
+    }
+
+
+    // Your existing variables and functions...
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            const textToSpeak = document.getElementById('csvData').textContent;
+            speakText(textToSpeak);
+        } else if (event.key === "Escape") { // Listen for the Esc key
+            window.location.href = 'user.html'; // Redirect to user.html
+        }
+    }
+
+
+
+    function announceCurrentPage() {
+        const lessonNumber = currentPage + 1; // Because currentPage is 0-based
+        const textToSpeak = "Lesson number " + lessonNumber;
+        speakText(textToSpeak);
+    }
+
+    function handleKeyPress(event) {
+        switch(event.key) {
+            case "Enter":
+                const textToSpeak = document.getElementById('csvData').textContent;
+                speakText(textToSpeak);
+                break;
+            case "Escape":
+                // Redirect to user.html
+                window.location.href = 'user.html';
+                break;
+            case "ArrowLeft":
+                // Navigate to the previous page
+                if (currentPage > 0) {
+                    currentPage -= 1;
+                    loadCurrentPage();
+                    announceCurrentPage();
+                }
+                break;
+            case "ArrowRight":
+                // Navigate to the next page
+                if (currentPage < csvUrls.length - 1) {
+                    currentPage += 1;
+                    loadCurrentPage();
+                    announceCurrentPage();
+                }
+                break;
+        }
+    }
+
+    document.addEventListener('keydown', handleKeyPress);
+
+    document.getElementById('previousButton').addEventListener('click', () => {
+        if (currentPage > 0) {
+            currentPage -= 1;
+            loadCurrentPage();
+        }
+    });
+
+    document.getElementById('nextButton').addEventListener('click', () => {
+        if (currentPage < csvUrls.length - 1) {
+            currentPage += 1;
+            loadCurrentPage();
+        }
+    });
+
+    function initialSetup() {
+        loadCurrentPage();
+        speakNonCSVContent(); // Speak non-CSV content when the page loads
+    }
+
+    window.onload = initialSetup;
+</script>
+
+</body>
+</html>
