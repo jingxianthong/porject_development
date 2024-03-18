@@ -1,0 +1,63 @@
+/* Styles for Sidebar */
+.sidebar {
+  background-color: #333; /* Set sidebar background color */
+  color: #fff; /* Set text color */
+  padding: 20px; /* Add padding */
+  width: 250px; /* Set sidebar width */
+  height: 100%; /* Set sidebar height */
+  position: fixed; /* Fixed position */
+  top: 0; /* Position from the top */
+  left: 0; /* Position from the left */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.sidebar h2 {
+  margin-bottom: 20px; /* Add space below heading */
+}
+
+.sidebar ul {
+  padding: 0; /* Remove default padding */
+  list-style-type: none; /* Remove list styles */
+}
+
+.sidebar ul li {
+  margin-bottom: 10px; /* Add space between list items */
+}
+
+.sidebar ul li a {
+  color: #fff; /* Set link color */
+  text-decoration: none; /* Remove underline */
+  display: block; /* Make links block elements */
+}
+
+.sidebar ul li a:hover {
+  background-color: #555; /* Darken background on hover */
+}
+
+/* Styles for Page Content */
+.content {
+  margin-left: 250px; /* Adjust for sidebar width */
+  padding: 20px; /* Add padding */
+}
+
+.content h2 {
+  margin-bottom: 20px; /* Add space below heading */
+}
+
+/* Additional styles for page content can be added here */
+
+/* Styles for Bootstrap container class */
+.container {
+  max-width: 800px; /* Limit container width */
+  margin: 20px auto; /* Center the container */
+  padding: 20px; /* Add some padding */
+  background-color: #fff; /* Set container background color */
+  border-radius: 10px; /* Apply border radius */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack flex items vertically */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+}
+
+/* Additional styles for Bootstrap container class can be added here */
