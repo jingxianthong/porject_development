@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Class</title>
+    <link rel="stylesheet" href="css/Signup_class.css"> <!-- Include your CSS file -->
+    <style>
+        /* Your existing CSS styles */
+    </style>
+<script>
+    function readPageContent() {
+        // Get the content of the necessary elements
+        var classCode = document.getElementById('class_code').value;
+        var joinMessage = document.getElementById('joinMessage').innerText;
+        
+        // Concatenate the text content
+        var textToRead = "Class Code: " + classCode + ". " + joinMessage;
+        
+        // Create a new SpeechSynthesisUtterance object
+        var speech = new SpeechSynthesisUtterance();
+        
+        // Set the text content to be read out
+        speech.text = textToRead;
+        
+        // Speak the text
+        window.speechSynthesis.speak(speech);
+    }
+
+    // Call the readPageContent function when the page loads
+    window.onload = readPageContent;
+
+    // Function to handle "Enter" key press event
+    document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent the default action
+                window.location.href = "cameraNshare_screen.html"; // Redirect to cameraNshare_screen.html
+            }
+        });
+    });
+</script>
+
+
+
+</head>
+<body>
+
+    <div class="container">
+        <h1>Signup Class</h1>
+        <form id="signupForm" action="join_class.php" method="POST"> <!-- Replace "join_class.php" with your form handler -->
+            <label for="class_code">Class Code:</label>
+            <input type="text" id="class_code" name="class_code" required value="789wer">
+            <!-- Add more input fields as needed -->
+            <a href="cameraNshare_screen.html" class="join-button">Join</a>
+        </form>
+        <p id="joinMessage">Press Enter to Join</p>
+    </div>
+
+</body>
+</html>
