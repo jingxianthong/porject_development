@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.video-container {
+    display: flex;
+    justify-content: space-between;
+    width: 800px; /* Adjust the width as needed */
+}
+
+video {
+    width: 45%; /* Set the width of each video element */
+    border: 1px solid #ddd; /* Add a border for visual separation */
+}
+
+button {
+    margin-top: 20px; /* Add some space between the buttons */
+}
+
+.back-to-home-button {
+    display: block;
+    margin-top: 20px; /* Add some space between the button and the other buttons */
+    padding: 10px 20px;
+    background-color: #007bff; /* Set button background color */
+    color: #fff; /* Set button text color */
+    border: none; /* Remove button border */
+    border-radius: 5px; /* Apply border radius */
+    text-decoration: none; /* Remove default underline */
+    cursor: pointer; /* Set cursor to pointer on hover */
+}
+
+.back-to-home-button:hover {
+    background-color: #0056b3; /* Darken button color on hover */
+}

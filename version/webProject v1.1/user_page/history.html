@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser History</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include your CSS file -->
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* Use Arial font */
+            background-color: #f8f9fa; /* Set background color */
+            color: #333; /* Set text color */
+        }
+
+        .container {
+            max-width: 800px; /* Limit container width */
+            margin: 0 auto; /* Center the container */
+            padding: 20px; /* Add some padding */
+            background-color: #fff; /* Set container background color */
+            border-radius: 10px; /* Apply border radius */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+        }
+
+        h1 {
+            text-align: center; /* Center align header */
+            margin-bottom: 20px; /* Add some space below header */
+        }
+
+        ul {
+            list-style-type: none; /* Remove default list styles */
+            padding: 0; /* Remove default padding */
+        }
+
+        li {
+            margin-bottom: 15px; /* Add some space between list items */
+        }
+
+        a {
+            text-decoration: none; /* Remove default underline */
+            color: #007bff; /* Set link color */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Add underline on hover */
+        }
+
+        .back-to-home-button {
+            display: block;
+            margin-top: 30px; /* Add some space between the button and the list */
+            padding: 12px 20px; /* Adjust button padding */
+            background-color: #007bff; /* Set button background color */
+            color: #fff; /* Set button text color */
+            border: none; /* Remove button border */
+            border-radius: 5px; /* Apply border radius */
+            text-decoration: none; /* Remove default underline */
+            cursor: pointer; /* Set cursor to pointer on hover */
+            transition: background-color 0.3s; /* Add smooth transition */
+        }
+
+        .back-to-home-button:hover {
+            background-color: #0056b3; /* Darken button color on hover */
+        }
+    </style>
+</head>
+<script>
+function readPageContent() {
+    // Select all text content on the page except for the actions section
+    var textToRead = document.body.innerText;
+
+    // Create a new SpeechSynthesisUtterance object
+    var speech = new SpeechSynthesisUtterance();
+
+    // Set the text content to be read out
+    speech.text = textToRead;
+
+    // Speak the text
+    window.speechSynthesis.speak(speech);
+}
+
+// Function to handle keypress events
+document.onkeydown = function(event) {
+    if (event.key === "Escape") {
+        window.location.href = "user.html"; // Redirect to home page
+    }
+};
+
+// Call the readPageContent function when the page loads
+window.onload = readPageContent;
+
+</script>
+<body>
+    
+
+    <div class="container">
+        <h1>Payment History</h1>
+        <ul>
+            <li>Payment Course: English <span>Amount: RM 50.00</span></li>
+            <li>Payment Course: English <span>Amount: RM 25.00</span></li>
+            <li>Payment Course: English <span>Amount: RM 100.00</span></li>
+            <!-- Add more list items with payment course and amount -->
+        </ul>
+        
+        <p>Press Escape to navigate to Exit.</p>
+        <a href="user.html" class="back-to-home-button">Back to Home</a>
+
+    </div>
+
+</body>
+</html>
